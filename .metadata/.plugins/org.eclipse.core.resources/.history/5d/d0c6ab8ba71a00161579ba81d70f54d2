@@ -1,0 +1,24 @@
+<?php
+
+	class Sensore{
+		private $ID;
+		private $descr;
+		
+		public function __construct($descr){
+			$this->descr = $descr;
+		}
+		
+		public function getDescrizione(){
+			return $this->descr;
+		}
+		
+		public function setTipo($descr){
+			$this->descr = $descr;
+		}
+		
+		public function nuovoSensore(){
+			
+		}
+		
+		
+	}

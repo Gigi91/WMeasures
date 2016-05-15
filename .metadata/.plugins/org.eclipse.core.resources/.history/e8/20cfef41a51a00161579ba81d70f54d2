@@ -1,0 +1,50 @@
+<?php
+
+	class SensoreDao{
+		
+		//aggiunge il sensore al database
+		public function addSensore($sensore, $username){
+			$db = DBConnection::getConnection();
+					
+			$query = "INSERT INTO Sensore(Descrizione) VALUES ('" . $sensore->getDescrizione() .'")';
+			if(!$result = $db->query($query)){
+				die('There was an error running the query [' . $db->error . ']');
+				return false;
+			}else{
+				$query = "SELECT ID FROM Sensore WHERE Descrizione = '".$sensore->getDescrizione() ."'";
+				$result = $db->query($query);
+				$row = $result->fetch_assoc();
+				$id = $row['id'];
+				$query = "INSERT INTO sensoreutente(IDSensore, IDUtente, DescSensore) VALUES ('" . $id. "','".$username."','". $sensore->getDescrizione() .'")';
+				if(!$result = $db->query($query)){
+					die('There was an error running the query [' . $db->error . ']');
+				return false;
+				}else{
+					return false;
+				}
+				
+				return true;
+			}
+		
+		}
+		
+		//ottieni utente mediante nome utente e password
+		public function getUser($username, $password){
+			$db = DBConnection::getConnection();
+			$query = "SELECT * FROM Utente WHERE username='$username' AND password='$password'";
+			$user = null;
+		
+			if(!$result = $db->query($query)){
+				die('There was an error running the query [' . $db->error . ']');
+			}
+		
+			if($result->num_rows){
+				return true;
+					
+			}else{
+				return false;
+			}
+		
+		
+		}
+	}

@@ -1,0 +1,38 @@
+<?php
+
+	require '../model/utente.php';
+	
+	$method = $_SERVER['REQUEST_METHOD'];
+	
+	if($method == 'GET'){
+		//visualizza un utente	
+		$username = $_GET['u'];
+		$password = md5($_GET['p']);
+		
+		$user = new Utente("","","","","");
+		$user->getUser($username, $password);
+		
+	}else if($method=='POST'){
+		//inserisci un utente
+		$nome = $_POST['n'];
+		$cognome = $_POST['c'];
+		$company = $_POST['cp'];
+		$username = $_POST['u'];
+		
+		$password = $_POST['p'];
+		$rpass = $_POST['rp'];
+		
+		if($password != $rpass){
+			return ;
+		}
+		
+		$password = md5($password);
+		
+		$user = new Utente($nome, $cognome, $company, $username, $password);
+		$user->addUser();
+	}
+	
+	
+
+?>
+	

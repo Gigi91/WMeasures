@@ -1,0 +1,13 @@
+<?php
+
+	class Misura{
+		private $idsensore;
+		private $username;
+		private $date;
+		private $time;
+		private $value;
+		private luogo;
+		
+		
+	}
+?>

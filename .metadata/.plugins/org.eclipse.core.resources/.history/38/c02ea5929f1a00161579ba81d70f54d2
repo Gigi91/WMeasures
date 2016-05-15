@@ -1,0 +1,14 @@
+<?php
+	
+	class Sensore{
+		private $ID;
+		private $Tipo;
+		
+		public function __construct($tipo){
+			$this->Tipo = $tipo;
+		}
+		
+		public function addSensor()
+	}
+	
+?>

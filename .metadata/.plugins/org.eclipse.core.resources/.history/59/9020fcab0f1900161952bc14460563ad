@@ -1,0 +1,54 @@
+<?php
+
+	require 'DBConnection.php';
+	
+	/**
+	 * Classe DAO per la manipolazione del database utente
+	 * @author Luigi
+	 *
+	 */
+	class UtenteDAO{
+		//aggiunge l'utente al database
+		function addUser($user){
+			$db = DBConnection::getConnection();
+		
+			$query = "SELECT * FROM Utente WHERE username='".$user->getUsername()."'";
+			$user = null;
+		
+			if(!$result = $db->query($query)){
+				die('There was an error running the query [' . $db->error . ']');
+			}
+		
+			if($result->num_rows){
+				die("Utente già esistente");
+			}else{
+				$query = "INSERT INTO Utente(Nome, Cognome, Compagnia, username, password) VALUES ('" . $user->getUsername() . "','".$user->getCognome()."','".$user->getCompany()."', '".$user->getUsername()."','".$user->getPassword()."')";
+				if(!$result = $db->query($query)){
+					die('There was an error running the query [' . $db->error . ']');
+				}else
+					die("utente aggiunto correttamente");
+			}
+		
+		}
+		
+		//ottieni utente mediante nome utente e password
+		function getUser($username, $password){
+			$db = DBConnection::getConnection();
+			$query = "SELECT * FROM Utente WHERE username='$username' AND password='$password'";
+			$user = null;
+		
+			if(!$result = $db->query($sql)){
+				die('There was an error running the query [' . $db->error . ']');
+			}
+		
+			if($result->num_rows){
+				//$user = new Utente($nome, $cognome, $company);
+					
+			}else{
+				//utente inesistente
+			}
+		
+		
+		}
+		
+	}
