@@ -1,0 +1,28 @@
+<?php
+
+	require 'DBConnection.php';
+	
+	class MisuraDao{
+		//aggiunge il sensore al database
+		public function aggiornaMisura($misura){
+			$db = DBConnection::getConnection();
+			
+			$query = "SELECT ID FROM Sensore WHERE Descrizione='".$misura->descSensore."'";
+			if(!$result = $db->query($query)){
+				die('There was an error running the query [' . $db->error . ']');
+				return false;
+			}
+			$row = $result->fetch_assoc();
+			$id = $row['ID'];
+			
+			$query = "INSERT INTO Misura(IDSensore,IDUtente,data,ora,valore) values (".$id.",'".
+					$misura->username."',DATA('".$misura->date."'),TIME('".$misura->time."'),".$misura->value."";
+			if(!$result = $db->query($query)){
+				die('There was an error running the query [' . $db->error . ']');
+				return false;
+			}
+			return true;
+		
+		}
+		
+	}

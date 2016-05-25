@@ -1,7 +1,0 @@
-<?php
-	include '../model/sensore.php';
-	
-	$username = $_GET['u'];
-	$sensore = new Sensore();
-	$sensore->listaSensoriUtente($username);
-?>

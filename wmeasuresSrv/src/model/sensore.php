@@ -2,11 +2,9 @@
 	require "../dao/sensoreDAO.php";
 
 	class Sensore{
-		public $ID;
 		public $descr;
 		
-		public function __construct($id, $desc){
-			$this->ID = $id;
+		public function __construct($desc){
 			$this->descr = $desc;
 		}
 		
@@ -14,7 +12,7 @@
 			return $this->descr;
 		}
 		
-		public function setTipo($descr){
+		public function setDescrizione($descr){
 			$this->descr = $descr;
 		}
 		
@@ -26,8 +24,8 @@
 		public function listaSensoriUtente($username){
 			$sensoreDao = new SensoreDao();
 			$senslist = $sensoreDao->getUserSensorList($username);
-			
-			echo json_encode($senslist);
+			$data = array("sensorList"=>$senslist);
+			echo json_encode($data);
 		}
 		
 	}

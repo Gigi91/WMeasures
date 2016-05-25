@@ -1,4 +1,0 @@
-<?php
-	$username = $_GET['u'];
-	$sensore = new Sensore();
-?>

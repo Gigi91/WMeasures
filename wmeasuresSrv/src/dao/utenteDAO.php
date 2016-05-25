@@ -13,7 +13,8 @@
 		public function addUser($utente){
 			$db = DBConnection::getConnection();
 		
-			$query = "SELECT * FROM Utente WHERE username='".$utente->getUsername()."'";
+			
+			$query = "SELECT * FROM Utente WHERE username='".$db->real_escape_string($utente->getUsername())."'";
 			$user = null;
 		
 			if(!$result = $db->query($query)){
@@ -21,14 +22,14 @@
 			}
 		
 			if($result->num_rows){
-				die("Utente già esistente");
+				die(utf8_decode("Nome utente già in uso"));
 			}else{
-				$query = "INSERT INTO Utente(Nome, Cognome, Compagnia, username, password) VALUES ('" . $utente->getNome() . "','".$utente->getCognome()."','".$utente->getCompany()."', '".$utente->getUsername()."','".$utente->getPassword()."')";
+				$query = "INSERT INTO Utente(Nome, Cognome, Compagnia, username, password) VALUES ('" . $db->real_escape_string($utente->getNome()) . "','".$db->real_escape_string($utente->getCognome())."','".$db->real_escape_string($utente->getCompany())."', '".$db->real_escape_string($utente->getUsername())."','".$db->real_escape_string($utente->getPassword())."')";
 				if(!$result = $db->query($query)){
 					die('There was an error running the query [' . $db->error . ']');
 				}else
-					//die("utente aggiunto correttamente");
-					return true;
+					die("Utente aggiunto correttamente");
+					//return true;
 			}
 		
 		}
@@ -36,7 +37,7 @@
 		//ottieni utente mediante nome utente e password
 		public function getUser($username, $password){
 			$db = DBConnection::getConnection();
-			$query = "SELECT * FROM Utente WHERE username='$username' AND password='$password'";
+			$query = "SELECT * FROM Utente WHERE username='".$db->real_escape_string($username)."' AND password='".$db->real_escape_string($password)."'";
 			$user = null;
 		
 			if(!$result = $db->query($query)){
@@ -47,7 +48,7 @@
 				return true;
 					
 			}else{
-				return false;
+				die("Nome utente o password errati");
 			}
 		
 		

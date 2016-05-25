@@ -1,7 +1,9 @@
 <?php
 
+	include "../dao/misuraDAO.php";
+	
 	class Misura{
-		public $idsensore;
+		public $descSensore;
 		public $username;
 		public $date;
 		public $time;
@@ -13,6 +15,10 @@
 			return $misuraDAO->aggiornaMisura($this);
 		}
 		
+		public function ottieniMisure($username, $start, $end, $sensori){
+			$misuraDAO = new MisuraDao();
+			return $misuraDAO->ottieniMisure($username, $start, $end, $sensori);
+		}
 		
 	}
 ?>

@@ -1,0 +1,42 @@
+<?php
+
+	require '../model/utente.php';
+	
+	//$method = $_SERVER['REQUEST_METHOD'];
+	$op = $_POST['op'];
+	
+	if($op == 'log'){
+		//visualizza un utente	
+		$username = $mysqli->real_escape_string($_POST['u']);
+		$password = md5($_POST['p']);
+		
+		$user = new Utente("","","","","");
+		if($user->getUser($username, $password))
+			die("Login OK");
+		else
+			die("Login false");
+		
+	}else if($op=='reg'){
+		//inserisci un utente
+		$nome = $mysqli->real_escape_string($_POST['n']);
+		$cognome = $mysqli->real_escape_string($_POST['c']);
+		$company = $mysqli->real_escape_string($_POST['cp']);
+		$username = $mysqli->real_escape_string($_POST['u']);
+		
+		$password = $_POST['p'];
+		$rpass = $_POST['rp'];
+		
+		if($password != $rpass){
+			return ;
+		}
+		
+		$password = md5($password);
+		
+		$user = new Utente($nome, $cognome, $company, $username, $password);
+		if($user->addUser())
+			die("Reg OK");
+		
+	}
+
+?>
+	
