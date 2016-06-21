@@ -19,9 +19,10 @@
 					$misura->username."',DATE('".$misura->date."'),TIME('".$misura->time."'),".$misura->value.")";
 			//die($query);
 			if(!$result = $db->query($query)){
-				die('There was an error running the query [' . $db->error . ']');
+				echo('There was an error running the query [' . $db->error . ']');
 				return false;
 			}
+			//echo ("OK");
 			return true;
 			
 			
@@ -31,12 +32,13 @@
 		public function ottieniMisure($username, $start, $end, $sensorList){
 			$db = DBConnection::getConnection();
 			$sensori = join(',',$sensorList);
-			$query = "SELECT DescSensore, valore, data FROM Misura WHERE IDUtente='".$username."' AND DescSensore IN ($sensori) and data BETWEEN DATE('$start')  AND DATE('$end');";
+			$query = "SELECT DescSensore, valore, data FROM Misura WHERE IDUtente='".$username."' AND DescSensore IN ($sensori) and data BETWEEN '$start' AND '$end';";
 			
 			if(!$result = $db->query($query)){
 				die('There was an error running the query [' . $db->error . ']');
 				return false;
 			}
+			
 
 			if($result->num_rows){
 				
@@ -51,6 +53,7 @@
 					foreach($list as $item) {
 					    if ($desc == $item->label) {
 					        $item->data[] = $val;
+					        $item->giorno[] = $giorno;
 					        $exist = true;//elemento trovato già
 					        break;
 					    }

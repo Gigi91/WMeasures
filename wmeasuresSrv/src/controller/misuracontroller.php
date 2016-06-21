@@ -11,7 +11,6 @@
 	
 	$json = file_get_contents('php://input');
 	$data = json_decode($json);
-
 	$u= $data->{'u'};
 	$op = $data->{'op'};
 	
@@ -26,6 +25,7 @@
 			$misura->username = $u;
 			$misura->aggiornaMisura();
 		}
+		die("OK");
 	}
 	else if($op=="read"){//{"start": "17/10/2016", "op": "read", "end": "16/9/2016", "u": "l.biasi", "desc": ["Resistenza 20 ohm", "Fotoresistenza"]}
 		$start = $data->{'start'};

@@ -1,0 +1,46 @@
+<?php
+	
+	/*$sensore = $_POST['s'];
+	$username = $_POST['u'];
+	$data = $_POST['d'];
+	$tempo = $_POST['t'];
+	$value= $_POST['v'];
+	$luogo = $_POST['l'];
+	*/
+	include "../model/misura.php";
+	
+	$json = file_get_contents('php://input');
+	$data = json_decode($json, TRUE);
+    //echo $json;
+	$u= $data['u'];
+	$op = $data['op'];
+	
+	if ($op=="write"){
+		$elementCount = count($data['sensorsValue']);
+		//print("ci sono ".$elementCount. "elementi");
+		$misura = new Misura();
+		foreach($data['sensorsValue'] as $sensor){
+			
+			$misura->value = $sensor['val'];
+			$misura->descSensore = $sensor['descr'];
+			//echo $misura->descSensore;
+			$misura->date =  $sensor['date'];
+			$misura->time =  $sensor['time'];
+			
+			$misura->username = $u;
+			$misura->aggiornaMisura();
+		}
+	}
+	else if($op=="read"){//{"start": "17/10/2016", "op": "read", "end": "16/9/2016", "u": "l.biasi", "desc": ["Resistenza 20 ohm", "Fotoresistenza"]}
+		$start = $data->{'start'};
+		$end = $data->{'end'};
+		$elementCount = count($data->{'desc'});
+		$sensorList = array();
+		for($i = 0;$i<$elementCount ;$i++){
+			array_push($sensorList, "'".$data->{'desc'}[$i]."'");
+		}
+		$misura = new Misura();
+		echo json_encode($misura->ottieniMisure($u, $start, $end, $sensorList));
+	}
+	
+?>
